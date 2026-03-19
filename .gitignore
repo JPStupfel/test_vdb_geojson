@@ -1,5 +1,9 @@
 .vscode/
 .DS_Store
+node_modules/
+python/.venv/
+python/chroma_db/
+javascript/node_modules/
 
 # Python artifacts
 __pycache__/
@@ -17,3 +21,4 @@ javascript/.cache/
 
 # ChromaDB data directories
 chroma_data/
+python/chroma.log

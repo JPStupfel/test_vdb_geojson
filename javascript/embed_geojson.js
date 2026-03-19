@@ -62,16 +62,21 @@ function loadGeoJSONDocuments(path) {
 
   return features.map((feature) => {
     const attrs = feature.attributes || {};
+    const metadata = {
+      objectid: attrs.OBJECTID ?? 0,
+      incident_name: attrs.IncidentName || "",
+      state: attrs.POOState || "",
+      daily_acres: attrs.DailyAcres ?? 0,
+      percent_contained: attrs.PercentContained ?? 0,
+      fire_cause: attrs.FireCause || "",
+    };
+    // ChromaDB rejects null/undefined metadata values — strip them
+    Object.keys(metadata).forEach((k) => {
+      if (metadata[k] == null) delete metadata[k];
+    });
     return new Document({
       pageContent: featureToText(feature),
-      metadata: {
-        objectid: attrs.OBJECTID,
-        incident_name: attrs.IncidentName || "",
-        state: attrs.POOState || "",
-        daily_acres: attrs.DailyAcres ?? null,
-        percent_contained: attrs.PercentContained ?? null,
-        fire_cause: attrs.FireCause || "",
-      },
+      metadata,
     });
   });
 }

@@ -98,13 +98,15 @@ def load_geojson_documents(path: Path) -> list[Document]:
         text = feature_to_text(feature)
         attrs = feature.get("attributes", {})
         metadata = {
-            "objectid": attrs.get("OBJECTID"),
+            "objectid": attrs.get("OBJECTID", 0),
             "incident_name": attrs.get("IncidentName", ""),
             "state": attrs.get("POOState", ""),
-            "daily_acres": attrs.get("DailyAcres"),
-            "percent_contained": attrs.get("PercentContained"),
+            "daily_acres": attrs.get("DailyAcres", 0.0),
+            "percent_contained": attrs.get("PercentContained", 0.0),
             "fire_cause": attrs.get("FireCause", ""),
         }
+        # ChromaDB rejects None metadata values — strip them
+        metadata = {k: v for k, v in metadata.items() if v is not None}
         documents.append(Document(page_content=text, metadata=metadata))
 
     return documents
