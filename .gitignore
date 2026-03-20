@@ -1,2 +1,24 @@
 .vscode/
 .DS_Store
+node_modules/
+python/.venv/
+python/chroma_db/
+javascript/node_modules/
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+env/
+python/chroma_db/
+
+# JavaScript artifacts
+javascript/node_modules/
+javascript/.cache/
+
+# ChromaDB data directories
+chroma_data/
+python/chroma.log
